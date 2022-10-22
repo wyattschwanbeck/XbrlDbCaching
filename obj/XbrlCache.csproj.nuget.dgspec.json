@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\wyatt\\Source\\Repos\\XbrlDbCaching\\XbrlCache.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\wyatt\\Source\\Repos\\XbrlDbCaching\\XbrlCache.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\wyatt\\Source\\Repos\\XbrlDbCaching\\XbrlCache.csproj",
+        "projectName": "ConsoleApplication",
+        "projectPath": "C:\\Users\\wyatt\\Source\\Repos\\XbrlDbCaching\\XbrlCache.csproj",
+        "packagesPath": "C:\\Users\\wyatt\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wyatt\\Source\\Repos\\XbrlDbCaching\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\wyatt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\wyatt\\source\\emgu": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "dependencies": {
+            "SecuritiesExchangeCommission.Edgar": {
+              "target": "Package",
+              "version": "[6.3.2, )"
+            },
+            "TimHanewich.Csv": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

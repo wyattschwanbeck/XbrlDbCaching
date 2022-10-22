@@ -33,5 +33,14 @@ namespace Xbrl.FinancialStatement
             public float? ProceedsFromIssuanceOfDebt {get; set;}
             public float? PaymentsOfDebt {get; set;}
             public float? DividendsPaid {get; set;}
+
+            //Adds for Short/Long term debt and operating income tax rate
+            public float? ShortTermDebtInterestRate { get; set; }
+            public float? ShortTermDebt { get; set; }
+            public float? LongTermDebtInterestRate { get; set; }
+            public float? LongTermDebt { get; set; }
+            public float? OperationsIncomeTaxRate { get; set; }
+            
+            
         }
 }

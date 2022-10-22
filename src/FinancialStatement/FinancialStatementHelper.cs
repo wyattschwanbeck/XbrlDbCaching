@@ -9,11 +9,18 @@ namespace Xbrl.FinancialStatement
     {
         public static FinancialStatement CreateFinancialStatement(this XbrlInstanceDocument doc)
         {
-            FinancialStatement ToReturn = new FinancialStatement(); 
+            FinancialStatement ToReturn = new FinancialStatement();
 
             //Get the context reference to focus on
-            XbrlContext focus_context = doc.FindNormalPeriodPrimaryContext();     
-
+            XbrlContext focus_context;
+            try
+            {
+                focus_context = doc.FindNormalPeriodPrimaryContext();
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
             #region "Contextual (misc) info"
 
             //Period start and end
@@ -178,6 +185,46 @@ namespace Xbrl.FinancialStatement
                 ToReturn.RetainedEarnings = null;
             }
 
+            try
+            {
+                ToReturn.ShortTermDebtInterestRate = doc.GetValueFromPriorities(focus_context.Id, "ShortTermDebtWeightedAverageInterestRate").ValueAsFloat();
+            } catch
+            {
+                ToReturn.ShortTermDebtInterestRate = null;
+            }
+            try
+            {
+                ToReturn.ShortTermDebt = doc.GetValueFromPriorities(focus_context.Id, "ShortTermDebt").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.ShortTermDebt = null;
+            }
+
+            try
+            {
+                ToReturn.LongTermDebtInterestRate = doc.GetValueFromPriorities(focus_context.Id, "LongtermDebtWeightedAverageInterestRate").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.LongTermDebtInterestRate = null;
+            }
+            try
+            {
+                ToReturn.LongTermDebt = doc.GetValueFromPriorities(focus_context.Id, "LongTermDebt").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.LongTermDebt = null;
+            }
+
+            try
+            {
+                ToReturn.OperationsIncomeTaxRate = doc.GetValueFromPriorities(focus_context.Id, "EffectiveIncomeTaxRateContinuingOperations").ValueAsFloat();
+            } catch
+            {
+                ToReturn.OperationsIncomeTaxRate = null;
+            }
             
 
 #endregion
@@ -305,6 +352,7 @@ namespace Xbrl.FinancialStatement
             dr_header.Values.Add("Proceeds from Issuance of Debt");
             dr_header.Values.Add("Payments of Debt");
             dr_header.Values.Add("Dividends Paid");
+
 
             //Add each value
             foreach (FinancialStatement fs in StatementsArranged)

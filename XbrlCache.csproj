@@ -1,0 +1,142 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{FB7D16C0-25E6-4918-916B-E20A83164AE6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>XbrlCache</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="src\XbrlLogo.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\applypatch-msg.sample" />
+    <None Include=".git\hooks\commit-msg.sample" />
+    <None Include=".git\hooks\fsmonitor-watchman.sample" />
+    <None Include=".git\hooks\post-update.sample" />
+    <None Include=".git\hooks\pre-applypatch.sample" />
+    <None Include=".git\hooks\pre-commit.sample" />
+    <None Include=".git\hooks\pre-merge-commit.sample" />
+    <None Include=".git\hooks\pre-push.sample" />
+    <None Include=".git\hooks\pre-rebase.sample" />
+    <None Include=".git\hooks\pre-receive.sample" />
+    <None Include=".git\hooks\prepare-commit-msg.sample" />
+    <None Include=".git\hooks\push-to-checkout.sample" />
+    <None Include=".git\hooks\update.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\master" />
+    <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\objects\pack\pack-732d85160bac0527a1a057c7370314c26f3a3811.idx" />
+    <None Include=".git\objects\pack\pack-732d85160bac0527a1a057c7370314c26f3a3811.pack" />
+    <None Include=".git\packed-refs" />
+    <None Include=".git\refs\heads\master" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".vs\ProjectSettings.json" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include=".vs\XbrlDbCaching\v17\.suo" />
+    <None Include="FunctionalTesting\FunctionalTesting.csproj" />
+    <None Include="FunctionalTesting\obj\Debug\netcoreapp3.1\FunctionalTesting.AssemblyInfoInputs.cache" />
+    <None Include="FunctionalTesting\obj\Debug\netcoreapp3.1\FunctionalTesting.csproj.AssemblyReference.cache" />
+    <None Include="FunctionalTesting\obj\Debug\netcoreapp3.1\FunctionalTesting.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="FunctionalTesting\obj\Release\netcoreapp3.1\FunctionalTesting.AssemblyInfoInputs.cache" />
+    <None Include="FunctionalTesting\obj\Release\netcoreapp3.1\FunctionalTesting.csproj.AssemblyReference.cache" />
+    <None Include="FunctionalTesting\obj\Release\netcoreapp3.1\FunctionalTesting.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="README.md" />
+    <None Include="src\.vs\ProjectSettings.json" />
+    <None Include="src\.vs\slnx.sqlite" />
+    <None Include="src\.vs\VSWorkspaceState.json" />
+    <None Include="src\.vs\Xbrl\DesignTimeBuild\.dtbcache.v2" />
+    <None Include="src\.vs\Xbrl\v16\.suo" />
+    <None Include="src\obj\Debug\netstandard2.0\Xbrl.AssemblyInfoInputs.cache" />
+    <None Include="src\obj\Debug\netstandard2.0\Xbrl.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="src\obj\Release\netstandard2.0\Xbrl.AssemblyInfoInputs.cache" />
+    <None Include="src\obj\Release\netstandard2.0\Xbrl.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="src\Xbrl.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FunctionalTesting\obj\Debug\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs" />
+    <Compile Include="FunctionalTesting\obj\Debug\netcoreapp3.1\FunctionalTesting.AssemblyInfo.cs" />
+    <Compile Include="FunctionalTesting\obj\Release\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs" />
+    <Compile Include="FunctionalTesting\obj\Release\netcoreapp3.1\FunctionalTesting.AssemblyInfo.cs" />
+    <Compile Include="FunctionalTesting\Program.cs" />
+    <Compile Include="src\FinancialStatement\FinancialStatement.cs" />
+    <Compile Include="src\FinancialStatement\FinancialStatementHelper.cs" />
+    <Compile Include="src\Helpers\XbrlInstanceDocumentHelper.cs" />
+    <Compile Include="src\obj\Debug\netstandard2.0\.NETStandard,Version=v2.0.AssemblyAttributes.cs" />
+    <Compile Include="src\obj\Debug\netstandard2.0\Xbrl.AssemblyInfo.cs" />
+    <Compile Include="src\obj\Release\netstandard2.0\.NETStandard,Version=v2.0.AssemblyAttributes.cs" />
+    <Compile Include="src\obj\Release\netstandard2.0\Xbrl.AssemblyInfo.cs" />
+    <Compile Include="src\XbrlContext.cs" />
+    <Compile Include="src\XbrlFact.cs" />
+    <Compile Include="src\XbrlInstanceDocument.cs" />
+    <Compile Include="src\XbrlTimeType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\refs\tags\" />
+    <Folder Include="FunctionalTesting\bin\Debug\netcoreapp3.1\" />
+    <Folder Include="FunctionalTesting\bin\Release\netcoreapp3.1\" />
+    <Folder Include="src\bin\Debug\netstandard2.0\" />
+    <Folder Include="src\bin\Release\netstandard2.0\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SecuritiesExchangeCommission.Edgar">
+      <Version>6.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="TimHanewich.Csv">
+      <Version>2.1.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

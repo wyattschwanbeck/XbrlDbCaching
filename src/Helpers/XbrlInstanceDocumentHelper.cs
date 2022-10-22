@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Xbrl.Helpers
 {
@@ -23,6 +24,7 @@ namespace Xbrl.Helpers
                     }
                 }
             }
+
 
             throw new Exception("Unable to find XBRL fact for value labeled with any of the following: " + priorities);
         }
