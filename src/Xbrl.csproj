@@ -3,14 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>5.1.1</Version>
-    <Authors>Tim Hanewich</Authors>
+    <Version>6.0.0</Version>
+    <Authors>Tim Hanewich, Wyatt Schwanbeck</Authors>
     <PackageIcon>XbrlLogo.jpeg</PackageIcon>
-    <PackageTags>xbrl</PackageTags>
-    <RepositoryUrl>https://github.com/TimHanewich/Xbrl</RepositoryUrl>
+    <PackageTags>xbrl, xpath, xml</PackageTags>
+    <RepositoryUrl>https://github.com/wyattschwanbeck/XbrlW</RepositoryUrl>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
     <FileVersion>0.0.0.0</FileVersion>
-    <Description>Library for reading XBRL (Extensible Business Reporting Language) instance documents</Description>
+    <Description>Library for reading XBRL (Extensible Business Reporting Language) instance documents forked from Tim Hanewich's version.
+Features optimized fact and context parsing with xPath and a larger list of financial statement results across varying taxonomies.</Description>
+    <PackageReleaseNotes>Optimized fact finding and added financial statement parsing for Preferred Dividends</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
