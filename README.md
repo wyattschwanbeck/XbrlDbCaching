@@ -83,3 +83,18 @@ Importing the namespace with the code below adds an extension method to the `Xbr
 ~~~
 FinancialStatement fs = doc.CreateFinancialStatement();
 ~~~
+
+
+## Enhancements From Original Package 
+#### XML Document Parsing
+This was originally forked from: Tim Hanewich's XBRL repository. The original documentation above is still functional but the code behind the scenes has been optimized to leverage XPath via the XML document accessible within XbrlInstanceDocument:
+~~~
+using Xbrl.XbrlInstanceDocumentHelper;
+XbrlInstanceDocument doc = //Use prior documentation to instantiate instance
+XmlNode FactNode = doc.xmlDocument.SelectSingleNode("//*[local-name()='Assets'",doc.xmlNamespaceManager);
+XbrlFact fact = FactNode.ToFact(doc.xmlNamespaceManager);
+
+~~~
+
+#### Financial Statement Helper Enhancements
+Preferred Dividends Added
