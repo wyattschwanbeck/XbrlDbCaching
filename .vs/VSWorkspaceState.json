@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\bin",
-    "\\src",
-    "\\src\\FinancialStatement"
+    "\\src"
   ],
-  "SelectedNode": "\\src\\FinancialStatement\\FinancialStatement.cs",
+  "SelectedNode": "\\src\\Xbrl.csproj",
   "PreviewInSolutionExplorer": false
 }

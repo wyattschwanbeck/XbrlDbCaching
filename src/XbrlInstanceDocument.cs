@@ -17,12 +17,12 @@ namespace Xbrl
         public XmlDocument xmlDocument { get; set; }
         public XmlNamespaceManager xmlNamespaceManager { get; set; }
 
-        public static XbrlInstanceDocument Create(Stream s)
+        public static XbrlInstanceDocument Create(string xml)
         {
             XbrlInstanceDocument ToReturn = new XbrlInstanceDocument();
 
-            StreamReader sr = new StreamReader(s);
-            string srRes = sr.ReadToEnd();
+            //StreamReader sr = new StreamReader(s);
+            string srRes = xml;
             XmlDocument doc = new XmlDocument();
             //Handle namespace URI
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
@@ -31,9 +31,11 @@ namespace Xbrl
                 return null;
             //Load XML document from stream text
             doc.LoadXml(srRes);
-            
+
 
             //Gather document namespace elements for resolution in xPath search
+            nsmgr.AddNamespace("xsl", "http://www.w3.org/1999/XSL/Transform");
+            nsmgr.AddNamespace("xsltContext", "http://www.w3.org/1999/XSL/Transform");
             foreach (XmlAttribute a in doc.DocumentElement.Attributes)
             {
                 //replace xmlns with xbrl as xmlns is reserved
