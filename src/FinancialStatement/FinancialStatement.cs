@@ -41,6 +41,9 @@ namespace Xbrl.FinancialStatement
             public float? LongTermDebt { get; set; }
             public float? OperationsIncomeTaxRate { get; set; }
             
-            
-        }
+            //Used for stock price metric comparison
+            public float? PreferredDividends { get; set; }
+            //PreferredDividendsNetOfTax or DividendsPreferredStock
+
+    }
 }

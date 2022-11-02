@@ -290,10 +290,23 @@ namespace Xbrl.FinancialStatement
             {
                 ToReturn.DividendsPaid = null;
             }
-            
+
             #endregion
-            
-            
+
+            #region "StockMetrics"
+            try
+            {
+                ToReturn.PreferredDividends = doc.GetValueFromPriorities(focus_context.Id, "PreferredDividendsNetOfTax", "DividendsPreferredStock").ValueAsFloat();
+            } catch
+            {
+                ToReturn.PreferredDividends = 0;
+            }
+            //
+            #endregion
+
+
+
+
             return ToReturn;
         }
     
