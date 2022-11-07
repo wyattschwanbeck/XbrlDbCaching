@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "EFvI1n19A5YfMaMObB0F3p0R+5cIgM8vdFHltg2B+EiyaQm+oxg98vrZOcLZEt6KSn+GCbf3z0QCBl9ckHSmlQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\wyatt\\Source\\Repos\\XbrlDbCaching\\XbrlCache.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\wyatt\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\wyatt\\.nuget\\packages\\securitiesexchangecommission.edgar\\6.3.2\\securitiesexchangecommission.edgar.6.3.2.nupkg.sha512",
+    "C:\\Users\\wyatt\\.nuget\\packages\\timhanewich.csv\\2.1.0\\timhanewich.csv.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

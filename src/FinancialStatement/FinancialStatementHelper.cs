@@ -1,6 +1,5 @@
 using System;
 using Xbrl.Helpers;
-using TimHanewich.Csv;
 using System.Collections.Generic;
 
 namespace Xbrl.FinancialStatement
@@ -9,11 +8,19 @@ namespace Xbrl.FinancialStatement
     {
         public static FinancialStatement CreateFinancialStatement(this XbrlInstanceDocument doc)
         {
-            FinancialStatement ToReturn = new FinancialStatement(); 
+            FinancialStatement ToReturn = new FinancialStatement();
 
             //Get the context reference to focus on
-            XbrlContext focus_context = doc.FindNormalPeriodPrimaryContext();     
-
+            XbrlContext focus_context;
+            try
+            {
+                focus_context = doc.FindNormalPeriodPrimaryContext();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
             #region "Contextual (misc) info"
 
             //Period start and end
@@ -23,7 +30,7 @@ namespace Xbrl.FinancialStatement
             //Common Stock Shares Outstanding
             try
             {
-                ToReturn.CommonStockSharesOutstanding = doc.GetValueFromPriorities(focus_context.Id, "CommonStockSharesOutstanding", "EntityCommonStockSharesOutstanding").ValueAsLong();
+                ToReturn.CommonStockSharesOutstanding = doc.GetValueFromPriorities(doc.PrimaryPeriodContextId, "CommonStockSharesOutstanding", "EntityCommonStockSharesOutstanding", "WeightedAverageNumberOfDilutedSharesOutstanding").ValueAsLong();
             }
             catch
             {
@@ -46,7 +53,7 @@ namespace Xbrl.FinancialStatement
             //Net income
             try
             {
-                ToReturn.NetIncome = doc.GetValueFromPriorities(focus_context.Id, "NetIncomeLoss","IncomeLossFromContinuingOperationsIncludingPortionAttributableToNoncontrollingInterest","ProfitLoss").ValueAsFloat();
+                ToReturn.NetIncome = doc.GetValueFromPriorities(focus_context.Id, "NetIncomeLoss", "IncomeLossFromContinuingOperationsIncludingPortionAttributableToNoncontrollingInterest", "ProfitLoss").ValueAsFloat();
             }
             catch
             {
@@ -85,9 +92,9 @@ namespace Xbrl.FinancialStatement
 
 
             #endregion
-         
+
             #region "Balance Sheet"
-         
+
             //Assets
             try
             {
@@ -111,7 +118,7 @@ namespace Xbrl.FinancialStatement
             //Equity
             try
             {
-                ToReturn.Equity = doc.GetValueFromPriorities(focus_context.Id, "Equity","StockholdersEquity","StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest").ValueAsFloat();
+                ToReturn.Equity = doc.GetValueFromPriorities(focus_context.Id, "Equity", "StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest").ValueAsFloat();
             }
             catch
             {
@@ -141,7 +148,7 @@ namespace Xbrl.FinancialStatement
             //Cash
             try
             {
-                ToReturn.Cash = doc.GetValueFromPriorities(focus_context.Id, "CashAndCashEquivalents","CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents").ValueAsFloat();
+                ToReturn.Cash = doc.GetValueFromPriorities(focus_context.Id, "CashAndCashEquivalents", "CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents").ValueAsFloat();
             }
             catch
             {
@@ -178,12 +185,54 @@ namespace Xbrl.FinancialStatement
                 ToReturn.RetainedEarnings = null;
             }
 
-            
+            try
+            {
+                ToReturn.ShortTermDebtInterestRate = doc.GetValueFromPriorities(focus_context.Id, "ShortTermDebtWeightedAverageInterestRate").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.ShortTermDebtInterestRate = null;
+            }
+            try
+            {
+                ToReturn.ShortTermDebt = doc.GetValueFromPriorities(focus_context.Id, "ShortTermDebt").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.ShortTermDebt = null;
+            }
 
-#endregion
-            
+            try
+            {
+                ToReturn.LongTermDebtInterestRate = doc.GetValueFromPriorities(focus_context.Id, "LongtermDebtWeightedAverageInterestRate").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.LongTermDebtInterestRate = null;
+            }
+            try
+            {
+                ToReturn.LongTermDebt = doc.GetValueFromPriorities(focus_context.Id, "LongTermDebt").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.LongTermDebt = null;
+            }
+
+            try
+            {
+                ToReturn.OperationsIncomeTaxRate = doc.GetValueFromPriorities(focus_context.Id, "EffectiveIncomeTaxRateContinuingOperations").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.OperationsIncomeTaxRate = null;
+            }
+
+
+            #endregion
+
             #region "Cash Flows"
-            
+
             //Operating Cash Flows
             try
             {
@@ -223,7 +272,7 @@ namespace Xbrl.FinancialStatement
             {
                 ToReturn.ProceedsFromIssuanceOfDebt = null;
             }
-            
+
             //Payments of debt
             try
             {
@@ -233,7 +282,7 @@ namespace Xbrl.FinancialStatement
             {
                 ToReturn.PaymentsOfDebt = null;
             }
-            
+
             //Dividends paid
             try
             {
@@ -243,287 +292,42 @@ namespace Xbrl.FinancialStatement
             {
                 ToReturn.DividendsPaid = null;
             }
-            
+
             #endregion
-            
-            
+
+            #region "StockMetrics"
+            try
+            {
+                ToReturn.PreferredDividends = doc.GetValueFromPriorities(focus_context.Id, "PreferredDividendsNetOfTax", "DividendsPreferredStock").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.PreferredDividends = 0;
+            }
+
+            try
+            {
+                ToReturn.EarningsPerShareDiluted = doc.GetValueFromPriorities(focus_context.Id, "EarningsPerShareDiluted").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.EarningsPerShareDiluted= 0;
+            }
+            try
+            {
+                ToReturn.EarningsPerShareBasic = doc.GetValueFromPriorities(focus_context.Id, "EarningsPerShareBasic").ValueAsFloat();
+            }
+            catch
+            {
+                ToReturn.EarningsPerShareBasic = 0;
+            }
+            //
+            #endregion
+
+
+
+
             return ToReturn;
-        }
-    
-        public static string PrintFinancialStatements(FinancialStatement[] statements)
-        {
-            #region  "Error checking"
-
-            if (statements == null)
-            {
-                throw new Exception("Unable to print financial statements - the supplied array of statements was null.");
-            }
-
-            #endregion
-        
-            //Arrange the statements from oldest to newest
-            List<FinancialStatement> ToPullFrom = new List<FinancialStatement>();
-            List<FinancialStatement> StatementsArranged = new List<FinancialStatement>();
-            ToPullFrom.AddRange(statements);
-            while (ToPullFrom.Count > 0)
-            {
-                FinancialStatement Winner = ToPullFrom[0];
-                foreach (FinancialStatement fs in ToPullFrom)
-                {
-                    if (fs.PeriodEnd < Winner.PeriodEnd)
-                    {
-                        Winner = fs;
-                    }
-                }
-                StatementsArranged.Add(Winner);
-                ToPullFrom.Remove(Winner);
-            }
-
-
-            CsvFile csv = new CsvFile();
-
-            //Headers
-            DataRow dr_header = csv.AddNewRow();
-            dr_header.Values.Add("Period Start");
-            dr_header.Values.Add("Period End");
-            dr_header.Values.Add("Revenue");
-            dr_header.Values.Add("SGA Expenses");
-            dr_header.Values.Add("R&D Expenses");
-            dr_header.Values.Add("Operating Income");
-            dr_header.Values.Add("Net Income");
-            dr_header.Values.Add("Assets");
-            dr_header.Values.Add("Liabilities");
-            dr_header.Values.Add("Equity");
-            dr_header.Values.Add("Cash");
-            dr_header.Values.Add("Current Assets");
-            dr_header.Values.Add("Current Liabilities");
-            dr_header.Values.Add("Retained Earnings");
-            dr_header.Values.Add("Common Stock Shares Outstanding");
-            dr_header.Values.Add("Operating Cash Flows");
-            dr_header.Values.Add("Investing Cash Flows");
-            dr_header.Values.Add("Financing Cash Flows");
-            dr_header.Values.Add("Proceeds from Issuance of Debt");
-            dr_header.Values.Add("Payments of Debt");
-            dr_header.Values.Add("Dividends Paid");
-
-            //Add each value
-            foreach (FinancialStatement fs in StatementsArranged)
-            {
-                DataRow dr = csv.AddNewRow();
-
-                //Start date
-                if (fs.PeriodStart.HasValue)
-                {
-                    dr.Values.Add(fs.PeriodStart.Value.ToShortDateString());
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //End date
-                if (fs.PeriodEnd.HasValue)
-                {
-                    dr.Values.Add(fs.PeriodEnd.Value.ToShortDateString());
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Revenue
-                if (fs.Revenue.HasValue)
-                {
-                    dr.Values.Add(fs.Revenue.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //SGA expenses
-                if (fs.SellingGeneralAndAdministrativeExpense.HasValue)
-                {
-                    dr.Values.Add(fs.SellingGeneralAndAdministrativeExpense.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Research and Development costs
-                if (fs.ResearchAndDevelopmentExpense.HasValue)
-                {
-                    dr.Values.Add(fs.ResearchAndDevelopmentExpense.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Operating income
-                if (fs.OperatingIncome.HasValue)
-                {
-                    dr.Values.Add(fs.OperatingIncome.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Net Income
-                if (fs.NetIncome.HasValue)
-                {
-                    dr.Values.Add(fs.NetIncome.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-
-                //Assets
-                if (fs.Assets.HasValue)
-                {
-                    dr.Values.Add(fs.Assets.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Liabilities
-                if (fs.Liabilities.HasValue)
-                {
-                    dr.Values.Add(fs.Liabilities.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Euity
-                if (fs.Equity.HasValue)
-                {
-                    dr.Values.Add(fs.Equity.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Casg
-                if (fs.Cash.HasValue)
-                {
-                    dr.Values.Add(fs.Cash.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Current Assets
-                if (fs.CurrentAssets.HasValue)
-                {
-                    dr.Values.Add(fs.CurrentAssets.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Current Liabilities
-                if (fs.CurrentLiabilities.HasValue)
-                {
-                    dr.Values.Add(fs.CurrentLiabilities.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Retained Earnings
-                if (fs.RetainedEarnings.HasValue)
-                {
-                    dr.Values.Add(fs.RetainedEarnings.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Common stock shares outstanding
-                if (fs.CommonStockSharesOutstanding.HasValue)
-                {
-                    dr.Values.Add(fs.CommonStockSharesOutstanding.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Operating cash flows
-                if (fs.OperatingCashFlows.HasValue)
-                {
-                    dr.Values.Add(fs.OperatingCashFlows.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Investing cash flows
-                if (fs.InvestingCashFlows.HasValue)
-                {
-                    dr.Values.Add(fs.InvestingCashFlows.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Financing Cash flows
-                if (fs.FinancingCashFlows.HasValue)
-                {
-                    dr.Values.Add(fs.FinancingCashFlows.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Proceeds from issuance of debt
-                if (fs.ProceedsFromIssuanceOfDebt.HasValue)
-                {
-                    dr.Values.Add(fs.ProceedsFromIssuanceOfDebt.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-
-                //Payments of debt
-                if (fs.PaymentsOfDebt.HasValue)
-                {
-                    dr.Values.Add(fs.PaymentsOfDebt.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-            
-                //Dividends Paid
-                if (fs.DividendsPaid.HasValue)
-                {
-                    dr.Values.Add(fs.DividendsPaid.Value.ToString("#,##0"));
-                }
-                else
-                {
-                    dr.Values.Add("-");
-                }
-            }
-
-            return csv.GenerateAsCsvFileContent();
         }
     }
 }

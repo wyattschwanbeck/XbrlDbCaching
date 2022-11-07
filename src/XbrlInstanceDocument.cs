@@ -17,12 +17,12 @@ namespace Xbrl
         public XmlDocument xmlDocument { get; set; }
         public XmlNamespaceManager xmlNamespaceManager { get; set; }
 
-        public static XbrlInstanceDocument Create(Stream s)
+        public static XbrlInstanceDocument Create(string xml)
         {
             XbrlInstanceDocument ToReturn = new XbrlInstanceDocument();
 
-            StreamReader sr = new StreamReader(s);
-            string srRes = sr.ReadToEnd();
+            //StreamReader sr = new StreamReader(s);
+            string srRes = xml;
             XmlDocument doc = new XmlDocument();
             //Handle namespace URI
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
@@ -31,13 +31,15 @@ namespace Xbrl
                 return null;
             //Load XML document from stream text
             doc.LoadXml(srRes);
-            
+
 
             //Gather document namespace elements for resolution in xPath search
+            nsmgr.AddNamespace("xsl", "http://www.w3.org/1999/XSL/Transform");
+            nsmgr.AddNamespace("xsltContext", "http://www.w3.org/1999/XSL/Transform");
             foreach (XmlAttribute a in doc.DocumentElement.Attributes)
             {
                 //replace xmlns with xbrl as xmlns is reserved
-                if (a.Name == "xmlns")
+                if (a.Name == "xmlns" )
                     nsmgr.AddNamespace("xbrl", a.Value);
                 else
                     nsmgr.AddNamespace(a.Name.Split(':')[1], a.Value);
@@ -51,27 +53,28 @@ namespace Xbrl
             #region "Get Contexts"
 
             List<XbrlContext> Contexts = new List<XbrlContext>();
-            XmlNodeList contexts = root.SelectNodes("descendant::xbrl:context", nsmgr);
-            
+            // = root.SelectNodes("descendant::xbrl:context", nsmgr);
+            XmlNodeList contexts = doc.SelectNodes(string.Format("//*[local-name()='{0}']", "context"), nsmgr);
+
             foreach (XmlNode context in contexts)
             {
                 XbrlContext xbrlContext = new XbrlContext();
                 foreach (XmlNode contextEntityPeriod in context.ChildNodes)
                 {
-                    if (contextEntityPeriod.Name == "period")
+                    if (contextEntityPeriod.Name.Contains("period"))
                     {
-                        if (contextEntityPeriod.FirstChild.Name == "startDate")
+                        if (contextEntityPeriod.FirstChild.Name.Contains("startDate"))
                         {
                             xbrlContext.StartDate = DateTime.Parse(contextEntityPeriod.FirstChild.InnerText);
                             xbrlContext.EndDate = DateTime.Parse(contextEntityPeriod.LastChild.InnerText);
                         }
-                        else if (contextEntityPeriod.FirstChild.Name == "instant")
+                        else if (contextEntityPeriod.FirstChild.Name.Contains("instant"))
                         {
                             xbrlContext.TimeType = XbrlTimeType.Instant;
                             xbrlContext.InstantDate = DateTime.Parse(contextEntityPeriod.FirstChild.InnerText);
                         }
                     }
-                    else if (contextEntityPeriod.Name == "entity")
+                    else if (contextEntityPeriod.Name.Contains("entity"))
                     {
 
                         xbrlContext.Id = context.Attributes[0].Value;
@@ -92,7 +95,7 @@ namespace Xbrl
             foreach (XmlNode node in root.ChildNodes)
             {
                 //Context isn't needed again and facts should have at least two attributes for fact ID and context
-                if (node.Name != "context" && node.Attributes.Count > 0)
+                if (node.Name != "context" && node.Attributes !=null && node.Attributes.Count > 0)
                 {
                     XbrlFact fact = new XbrlFact();
                     fact.Value = node.InnerText;

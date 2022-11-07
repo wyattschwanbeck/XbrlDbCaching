@@ -1,0 +1,10 @@
+C:\Users\wyatt\source\repos\XbrlDbCaching\obj\x86\Debug\XbrlCache.csproj.AssemblyReference.cache
+C:\Users\wyatt\source\repos\XbrlDbCaching\obj\x86\Debug\XbrlCache.csproj.CoreCompileInputs.cache
+C:\Users\wyatt\source\repos\XbrlDbCaching\bin\Debug\ConsoleApplication.dll
+C:\Users\wyatt\source\repos\XbrlDbCaching\bin\Debug\ConsoleApplication.pdb
+C:\Users\wyatt\source\repos\XbrlDbCaching\bin\Debug\Newtonsoft.Json.dll
+C:\Users\wyatt\source\repos\XbrlDbCaching\bin\Debug\SecuritiesExchangeCommissionEdgar.dll
+C:\Users\wyatt\source\repos\XbrlDbCaching\bin\Debug\TimHanewich.Csv.dll
+C:\Users\wyatt\source\repos\XbrlDbCaching\obj\x86\Debug\XbrlCache.csproj.CopyComplete
+C:\Users\wyatt\source\repos\XbrlDbCaching\obj\x86\Debug\ConsoleApplication.dll
+C:\Users\wyatt\source\repos\XbrlDbCaching\obj\x86\Debug\ConsoleApplication.pdb
