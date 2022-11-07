@@ -43,6 +43,8 @@ namespace Xbrl.FinancialStatement
             
             //Used for stock price metric comparison
             public float? PreferredDividends { get; set; }
+            public float? EarningsPerShareDiluted { get; set; }
+            public float? EarningsPerShareBasic { get; set; }
             //PreferredDividendsNetOfTax or DividendsPreferredStock
 
     }

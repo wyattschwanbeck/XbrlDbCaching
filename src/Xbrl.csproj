@@ -13,6 +13,9 @@
     <Description>Library for reading XBRL (Extensible Business Reporting Language) instance documents forked from Tim Hanewich's version.
 Features optimized fact and context parsing with xPath and a larger list of financial statement results across varying taxonomies.</Description>
     <PackageReleaseNotes>Optimized fact finding and added financial statement parsing for Preferred Dividends</PackageReleaseNotes>
+    <AssemblyName>XbrlW</AssemblyName>
+    <Copyright>https://www.mit.edu/~amini/LICENSE.md</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +27,6 @@ Features optimized fact and context parsing with xPath and a larger list of fina
 
   <ItemGroup>
     <PackageReference Include="System.Xml.ReaderWriter" Version="4.3.1" />
-    <PackageReference Include="TimHanewich.Csv" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
